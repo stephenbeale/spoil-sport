@@ -93,7 +93,7 @@ function getTitleText(videoEl) {
   return "";
 }
 
-function hideVideo(videoEl) {
+function sanitiseVideo(videoEl) {
   if (videoEl.getAttribute(PROCESSED_ATTR) === "hidden") return;
 
   // Hide thumbnail
@@ -122,7 +122,7 @@ function hideVideo(videoEl) {
   videoEl.setAttribute(PROCESSED_ATTR, "hidden");
 }
 
-function restoreVideo(videoEl) {
+function unsanitiseVideo(videoEl) {
   if (videoEl.getAttribute(PROCESSED_ATTR) !== "hidden") return;
 
   const thumbnail =
@@ -167,14 +167,14 @@ function processVideos() {
     const channelName = getChannelName(videoEl);
 
     if (isSportsContent(originalTitle) || isBlockedChannel(channelName)) {
-      hideVideo(videoEl);
+      sanitiseVideo(videoEl);
     }
   });
 }
 
-function restoreAll() {
+function unsanitiseAll() {
   const hidden = document.querySelectorAll(`[${PROCESSED_ATTR}="hidden"]`);
-  hidden.forEach(restoreVideo);
+  hidden.forEach(unsanitiseVideo);
 }
 
 // Observe DOM changes for dynamically loaded content
@@ -226,7 +226,7 @@ chrome.storage.onChanged.addListener((changes) => {
   if (changes.enabled) {
     enabled = changes.enabled.newValue;
     if (!enabled) {
-      restoreAll();
+      unsanitiseAll();
     }
   }
   if (enabled) {

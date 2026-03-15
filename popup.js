@@ -17,7 +17,7 @@ optionsLink.addEventListener("click", (e) => {
   chrome.runtime.openOptionsPage();
 });
 
-// Count hidden items on the active tab
+// Count sanitised items on the active tab
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   if (!tabs[0]?.id) return;
   chrome.scripting?.executeScript?.(
@@ -30,7 +30,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const count = results[0].result || 0;
       statsEl.textContent =
         count > 0
-          ? `Hiding ${count} video${count !== 1 ? "s" : ""} on this page`
+          ? `Sanitised ${count} video${count !== 1 ? "s" : ""} on this page`
           : "No sports videos detected on this page";
     }
   );
