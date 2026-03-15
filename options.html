@@ -12,6 +12,7 @@
       max-width: 480px;
     }
     h1 { font-size: 18px; margin-bottom: 16px; color: #fff; }
+    h2 { font-size: 15px; margin-bottom: 10px; color: #ccc; }
     p { font-size: 13px; color: #999; margin-bottom: 12px; }
     .keyword-list {
       display: flex;
@@ -83,7 +84,9 @@
   </style>
 </head>
 <body>
-  <h1>Spoil Sport - Blocked Keywords</h1>
+  <h1>Spoil Sport - Settings</h1>
+
+  <h2>Blocked Keywords</h2>
   <p>Videos whose titles match any of these keywords will have their thumbnails hidden and titles replaced.</p>
   <div class="keyword-list" id="keyword-list" role="list" aria-label="Blocked keywords"></div>
   <div class="add-row">
@@ -91,8 +94,19 @@
     <input type="text" id="new-keyword" placeholder="Add a keyword..." aria-label="Add keyword">
     <button class="add-btn" id="add-btn">Add</button>
   </div>
-  <button class="reset-btn" id="reset-btn">Reset to defaults</button>
-  <div id="status" aria-live="polite"></div>
+  <button class="reset-btn" id="reset-keywords-btn">Reset keywords</button>
+
+  <h2 style="margin-top:20px;">Blocked Channels</h2>
+  <p>All videos from these channels will be hidden regardless of title.</p>
+  <div class="keyword-list" id="channel-list" role="list" aria-label="Blocked channels"></div>
+  <div class="add-row">
+    <label for="new-channel" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Add channel</label>
+    <input type="text" id="new-channel" placeholder="Add a channel name..." aria-label="Add channel">
+    <button class="add-btn" id="add-channel-btn">Add</button>
+  </div>
+  <button class="reset-btn" id="reset-channels-btn">Reset channels</button>
+
+  <div id="status" aria-live="polite" style="margin-top:12px;"></div>
   <script src="options.js"></script>
 </body>
 </html>

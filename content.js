@@ -17,7 +17,19 @@ const DEFAULT_SPORTS = [
   "final score", "match report", "post-match"
 ];
 
+const DEFAULT_CHANNELS = [
+  "sky sports", "bt sport", "tnt sports", "espn", "bbc sport",
+  "premier league", "champions league", "fa cup",
+  "nfl", "nba", "mlb", "nhl",
+  "cricket australia", "ecb", "icc",
+  "wwe", "ufc", "dazn", "eurosport",
+  "sky sports f1", "formula 1", "motogp",
+  "pga tour", "the open", "wimbledon",
+  "rugby tv", "world rugby"
+];
+
 let blockedSports = [];
+let blockedChannels = [];
 let enabled = true;
 const HIDDEN_TITLE = "Sports video (spoilers hidden)";
 const PROCESSED_ATTR = "data-spoilsport";
@@ -25,9 +37,10 @@ const PROCESSED_ATTR = "data-spoilsport";
 function loadSettings() {
   return new Promise((resolve) => {
     chrome.storage.sync.get(
-      { sports: DEFAULT_SPORTS, enabled: true },
+      { sports: DEFAULT_SPORTS, channels: DEFAULT_CHANNELS, enabled: true },
       (settings) => {
         blockedSports = settings.sports.map((s) => s.toLowerCase());
+        blockedChannels = settings.channels.map((s) => s.toLowerCase());
         enabled = settings.enabled;
         resolve();
       }
@@ -46,6 +59,26 @@ function isSportsContent(titleText) {
   if (!titleText) return false;
   const pattern = buildPattern();
   return pattern.test(titleText);
+}
+
+function getChannelName(videoEl) {
+  const channelEl =
+    videoEl.querySelector("ytd-channel-name #text") ||
+    videoEl.querySelector("ytd-channel-name a") ||
+    videoEl.querySelector("#channel-name #text") ||
+    videoEl.querySelector("#channel-name a") ||
+    videoEl.querySelector(".ytd-channel-name") ||
+    videoEl.querySelector("[id='channel-name']");
+  if (channelEl) {
+    return (channelEl.textContent || "").trim();
+  }
+  return "";
+}
+
+function isBlockedChannel(channelName) {
+  if (!channelName) return false;
+  const lower = channelName.toLowerCase();
+  return blockedChannels.some((ch) => lower.includes(ch));
 }
 
 function getTitleText(videoEl) {
@@ -131,7 +164,9 @@ function processVideos() {
       videoEl.querySelector("#video-title")?.dataset?.spoilsportOriginal ||
       getTitleText(videoEl);
 
-    if (isSportsContent(originalTitle)) {
+    const channelName = getChannelName(videoEl);
+
+    if (isSportsContent(originalTitle) || isBlockedChannel(channelName)) {
       hideVideo(videoEl);
     }
   });
@@ -184,6 +219,9 @@ async function init() {
 chrome.storage.onChanged.addListener((changes) => {
   if (changes.sports) {
     blockedSports = changes.sports.newValue.map((s) => s.toLowerCase());
+  }
+  if (changes.channels) {
+    blockedChannels = changes.channels.newValue.map((s) => s.toLowerCase());
   }
   if (changes.enabled) {
     enabled = changes.enabled.newValue;

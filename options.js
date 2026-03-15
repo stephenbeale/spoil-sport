@@ -17,77 +17,116 @@ const DEFAULT_SPORTS = [
   "final score", "match report", "post-match"
 ];
 
-const listEl = document.getElementById("keyword-list");
-const input = document.getElementById("new-keyword");
-const addBtn = document.getElementById("add-btn");
-const resetBtn = document.getElementById("reset-btn");
+const DEFAULT_CHANNELS = [
+  "sky sports", "bt sport", "tnt sports", "espn", "bbc sport",
+  "premier league", "champions league", "fa cup",
+  "nfl", "nba", "mlb", "nhl",
+  "cricket australia", "ecb", "icc",
+  "wwe", "ufc", "dazn", "eurosport",
+  "sky sports f1", "formula 1", "motogp",
+  "pga tour", "the open", "wimbledon",
+  "rugby tv", "world rugby"
+];
+
+const keywordListEl = document.getElementById("keyword-list");
+const keywordInput = document.getElementById("new-keyword");
+const addKeywordBtn = document.getElementById("add-btn");
+const resetKeywordsBtn = document.getElementById("reset-keywords-btn");
+
+const channelListEl = document.getElementById("channel-list");
+const channelInput = document.getElementById("new-channel");
+const addChannelBtn = document.getElementById("add-channel-btn");
+const resetChannelsBtn = document.getElementById("reset-channels-btn");
+
 const statusEl = document.getElementById("status");
 
 let sports = [];
+let channels = [];
 
-function render() {
+function renderList(listEl, items, removeCallback) {
   listEl.innerHTML = "";
-  sports
+  items
     .slice()
     .sort((a, b) => a.localeCompare(b))
-    .forEach((keyword) => {
+    .forEach((item) => {
       const tag = document.createElement("span");
       tag.className = "keyword-tag";
       tag.setAttribute("role", "listitem");
-      tag.textContent = keyword;
+      tag.textContent = item;
 
       const removeBtn = document.createElement("button");
       removeBtn.textContent = "\u00d7";
-      removeBtn.setAttribute("aria-label", `Remove ${keyword}`);
-      removeBtn.addEventListener("click", () => {
-        sports = sports.filter((s) => s !== keyword);
-        save();
-        render();
-      });
+      removeBtn.setAttribute("aria-label", `Remove ${item}`);
+      removeBtn.addEventListener("click", () => removeCallback(item));
 
       tag.appendChild(removeBtn);
       listEl.appendChild(tag);
     });
 }
 
+function showStatus(msg) {
+  statusEl.textContent = msg;
+  setTimeout(() => { statusEl.textContent = ""; }, 1500);
+}
+
 function save() {
-  chrome.storage.sync.set({ sports }, () => {
-    statusEl.textContent = "Saved";
-    setTimeout(() => {
-      statusEl.textContent = "";
-    }, 1500);
+  chrome.storage.sync.set({ sports, channels }, () => showStatus("Saved"));
+}
+
+function renderAll() {
+  renderList(keywordListEl, sports, (keyword) => {
+    sports = sports.filter((s) => s !== keyword);
+    save();
+    renderAll();
+  });
+  renderList(channelListEl, channels, (channel) => {
+    channels = channels.filter((c) => c !== channel);
+    save();
+    renderAll();
   });
 }
 
-function addKeyword() {
-  const value = input.value.trim().toLowerCase();
+function addItem(inputEl, list, listName) {
+  const value = inputEl.value.trim().toLowerCase();
   if (!value) return;
-  if (sports.includes(value)) {
-    statusEl.textContent = "Keyword already exists";
-    setTimeout(() => {
-      statusEl.textContent = "";
-    }, 1500);
+  if (list.includes(value)) {
+    showStatus(`${listName} already exists`);
     return;
   }
-  sports.push(value);
+  list.push(value);
   save();
-  render();
-  input.value = "";
-  input.focus();
+  renderAll();
+  inputEl.value = "";
+  inputEl.focus();
 }
 
-addBtn.addEventListener("click", addKeyword);
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addKeyword();
+addKeywordBtn.addEventListener("click", () => addItem(keywordInput, sports, "Keyword"));
+keywordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addItem(keywordInput, sports, "Keyword");
 });
 
-resetBtn.addEventListener("click", () => {
+addChannelBtn.addEventListener("click", () => addItem(channelInput, channels, "Channel"));
+channelInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addItem(channelInput, channels, "Channel");
+});
+
+resetKeywordsBtn.addEventListener("click", () => {
   sports = [...DEFAULT_SPORTS];
   save();
-  render();
+  renderAll();
 });
 
-chrome.storage.sync.get({ sports: DEFAULT_SPORTS }, (settings) => {
-  sports = settings.sports;
-  render();
+resetChannelsBtn.addEventListener("click", () => {
+  channels = [...DEFAULT_CHANNELS];
+  save();
+  renderAll();
 });
+
+chrome.storage.sync.get(
+  { sports: DEFAULT_SPORTS, channels: DEFAULT_CHANNELS },
+  (settings) => {
+    sports = settings.sports;
+    channels = settings.channels;
+    renderAll();
+  }
+);
