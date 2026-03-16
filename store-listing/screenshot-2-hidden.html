@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screenshot 2 — Hidden Videos (1280x800)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+    }
+
+    .text-side {
+      max-width: 440px;
+      color: #fff;
+    }
+    .text-side h2 {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .text-side p {
+      font-size: 20px;
+      color: #b0c4de;
+      line-height: 1.5;
+    }
+
+    /* Mock YouTube feed */
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 500px;
+    }
+    .video-card {
+      display: flex;
+      gap: 14px;
+      background: #0f0f23;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #222;
+    }
+    .thumb {
+      width: 180px;
+      height: 100px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .thumb.normal {
+      background: linear-gradient(135deg, #2a4a6a, #3a6a9a);
+    }
+    .thumb.hidden {
+      background: #111;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #666;
+    }
+    .meta { display: flex; flex-direction: column; justify-content: center; }
+    .meta .title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .meta .title.hidden-title {
+      color: #666;
+      font-style: italic;
+    }
+    .meta .channel {
+      font-size: 13px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-side">
+    <h2>Spoilers replaced before you see them</h2>
+    <p>Thumbnails are covered and titles are rewritten. Normal videos are untouched.</p>
+  </div>
+  <div class="feed">
+    <div class="video-card">
+      <div class="thumb normal"></div>
+      <div class="meta">
+        <div class="title">10 VS Code Tips You Need to Know</div>
+        <div class="channel">Fireship</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="thumb hidden">Spoilers hidden</div>
+      <div class="meta">
+        <div class="title hidden-title">Sports video (spoilers hidden)</div>
+        <div class="channel">Sky Sports</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="thumb hidden">Spoilers hidden</div>
+      <div class="meta">
+        <div class="title hidden-title">Sports video (spoilers hidden)</div>
+        <div class="channel">BBC Sport</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="thumb normal"></div>
+      <div class="meta">
+        <div class="title">Making a Mass-Effect-inspired Synth</div>
+        <div class="channel">Andrew Huang</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spoil Sport — Privacy Policy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      padding: 40px 20px;
+      line-height: 1.6;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 24px; color: #fff; margin-bottom: 8px; }
+    .date { font-size: 13px; color: #888; margin-bottom: 24px; }
+    h2 { font-size: 18px; color: #ccc; margin-top: 24px; margin-bottom: 8px; }
+    p, ul { font-size: 15px; margin-bottom: 12px; }
+    ul { padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    a { color: #80b0ff; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid #80b0ff; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <h1>Spoil Sport — Privacy Policy</h1>
+  <p class="date">Effective date: 16 March 2026</p>
+
+  <h2>Overview</h2>
+  <p>Spoil Sport is a Chrome extension that hides sports spoilers from your YouTube feed. It is designed with privacy as a core principle — no data is collected, stored, or transmitted to any external server.</p>
+
+  <h2>Data collection</h2>
+  <p>Spoil Sport does <strong>not</strong> collect any personal data. Specifically:</p>
+  <ul>
+    <li>No analytics or tracking scripts</li>
+    <li>No cookies (beyond Chrome's own storage API)</li>
+    <li>No external network requests</li>
+    <li>No user accounts or sign-in</li>
+    <li>No browsing history recorded</li>
+  </ul>
+
+  <h2>Data storage</h2>
+  <p>The extension stores your preferences (blocked keywords, blocked channels, and enabled/disabled state) using Chrome's built-in <code>chrome.storage.sync</code> API. This data:</p>
+  <ul>
+    <li>Stays within your Chrome browser profile</li>
+    <li>Syncs across your signed-in Chrome devices (if Chrome Sync is enabled)</li>
+    <li>Is never sent to any third-party server</li>
+    <li>Can be reset to defaults at any time from the extension's settings page</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <p>Spoil Sport requests the following Chrome permissions:</p>
+  <ul>
+    <li><strong>storage</strong> — to save your keyword and channel preferences</li>
+    <li><strong>scripting</strong> — to count hidden videos shown in the popup</li>
+    <li><strong>activeTab</strong> — to interact with the current YouTube tab</li>
+    <li><strong>Host permission (youtube.com)</strong> — to run the content script that hides spoilers on YouTube pages</li>
+  </ul>
+
+  <h2>Third-party services</h2>
+  <p>Spoil Sport does not integrate with, send data to, or receive data from any third-party services.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this privacy policy is updated, the new version will be published at this same URL. The effective date at the top of the page will be updated accordingly.</p>
+
+  <h2>Contact</h2>
+  <p>If you have questions about this privacy policy, please open an issue on the <a href="https://github.com/stephenbeale/spoil-sport">GitHub repository</a>.</p>
+</body>
+</html>
