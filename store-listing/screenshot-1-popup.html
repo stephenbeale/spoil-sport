@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screenshot 1 — Popup Toggle (1280x800)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+    }
+
+    /* Left side: description */
+    .text-side {
+      max-width: 480px;
+      color: #fff;
+    }
+    .text-side h2 {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .text-side p {
+      font-size: 20px;
+      color: #b0c4de;
+      line-height: 1.5;
+    }
+
+    /* Right side: popup mockup */
+    .popup-frame {
+      background: #1a1a2e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      width: 320px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .popup-frame h1 {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .toggle-row label {
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+    .switch {
+      width: 52px;
+      height: 28px;
+      background: #4caf50;
+      border-radius: 28px;
+      position: relative;
+    }
+    .switch::before {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      right: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .stats {
+      font-size: 14px;
+      color: #888;
+      border-top: 1px solid #333;
+      padding-top: 12px;
+    }
+    .stats strong {
+      color: #4caf50;
+      font-size: 18px;
+    }
+    .options-link {
+      display: block;
+      margin-top: 12px;
+      color: #80b0ff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-side">
+    <h2>One click to hide all sports spoilers</h2>
+    <p>Toggle Spoil Sport on or off from the toolbar popup. See how many videos have been hidden at a glance.</p>
+  </div>
+  <div class="popup-frame">
+    <h1>Spoil Sport</h1>
+    <div class="toggle-row">
+      <label>Enabled</label>
+      <div class="switch"></div>
+    </div>
+    <div class="stats"><strong>12</strong> videos hidden on this page</div>
+    <a class="options-link" href="#">Manage blocked sports</a>
+  </div>
+</body>
+</html>
